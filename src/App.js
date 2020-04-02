@@ -18,7 +18,12 @@ class App extends React.Component {
       <div className="App">
         <Header />
         <ItemAdder addNewItem={this.addNewItem} />
-        <ItemList items={this.state.items} deleteItem={this.deleteItem} />
+        <ItemList
+          items={this.state.items}
+          deleteItem={this.deleteItem}
+          sortByDueDate={this.sortByDueDate}
+          sortByActivity={this.sortByActivity}
+        />
       </div>
     );
   }
@@ -34,6 +39,24 @@ class App extends React.Component {
       item => item.activity !== completedItem
     );
     this.setState({ items: newItemList });
+  };
+
+  sortByDueDate = () => {
+    const orderedList = [...this.state.items].sort((a, b) => {
+      if (a.dueDate > b.dueDate) return 1;
+      if (a.dueDate < b.dueDate) return -1;
+      return 0;
+    });
+    this.setState({ items: orderedList });
+  };
+
+  sortByActivity = () => {
+    const orderedList = [...this.state.items].sort((a, b) => {
+      if (a.activity > b.activity) return 1;
+      if (a.activity < b.activity) return -1;
+      return 0;
+    });
+    this.setState({ items: orderedList });
   };
 }
 
