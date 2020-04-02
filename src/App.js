@@ -1,26 +1,37 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import "./App.css";
+import Header from "./Components/Header";
+import ItemList from "./Components/ItemList";
+import ItemAdder from "./Components/ItemAdder";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends React.Component {
+  state = {
+    items: [
+      { activity: "shopping", dueDate: "08/04" },
+      { activity: "cleaning", dueDate: "05/04" },
+      { activity: "cooking", dueDate: "02/04" }
+    ]
+  };
+
+  render() {
+    return (
+      <div className="App">
+        <Header />
+        <ItemAdder addNewItem={this.addNewItem} />
+        <ItemList items={this.state.items} />
+      </div>
+    );
+  }
+
+  addNewItem = newItemActivity => {
+    this.setState(currentState => {
+      return { items: [...currentState.items, { activity: newItemActivity }] };
+    });
+  };
+
+  sortItems = sortBy => {
+    console.log(sortBy);
+  };
 }
 
 export default App;
